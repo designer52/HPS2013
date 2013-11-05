@@ -15,6 +15,22 @@ class Moves:
 
     self.__moves = []
 
+  def parseMoves(self, statestr):
+    del self.__moves[:]
+    
+    state=statestr.split('\n')
+    movestr = state[1]
+    if len(movestr)==0: return # no moves yet
+    movelist=movestr.split('),(')
+    movelist[0]=movelist[0][1:]
+    movelist[-1]=movelist[-1][:-1]
+    for m in movelist:
+      m=m.split(',')
+      mid=int(m[0])
+      x = int(m[1])
+      y = int(m[2])
+      self.__moves.append((mid, x, y))
+            
   def isFirstMove(self):
     return len(self.__moves) == 0
   

@@ -64,7 +64,7 @@ def getBestMove(previousMoves, points, playerId, numberOfStones):
     playerTwoMoves = ',' + playerTwoMoves
 
   input_ = points + playerOneMoves + playerTwoMoves
-  p = subprocess.Popen(["./Voronoi"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+  p = subprocess.Popen([".\Voronoi\Debug\Voronoi.exe"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
   output = p.communicate(input_)[0]
   output = [int(x) for x in output.split(',')]
   output = zip(output, output[1:], output[2:], output[3:])[::4]

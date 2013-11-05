@@ -1,5 +1,6 @@
 import random
 import Moves
+from subprocess import call
 
 class Algorithm:
   CURRENT_PLAYER = 0
@@ -12,6 +13,27 @@ class Algorithm:
     # ??? how to do empty statement ???
     a = 1 + 1
 
+class CPlusPlusAlgorithm:
+  CURRENT_PLAYER = None
+  __PROGRAM_NAME = ".\Voronoi.exe"
+  def __init__(self, playerId):
+    self.CURRENT_PLAYER = playerId
+
+  def playMove(self, moves):
+    
+    call (self.__PROGRAM_NAME)
+    f = open('input.txt', 'w')
+    f.write(str(self.CURRENT_PLAYER))
+    for move in moves.getMoves():
+      f.write(',' + str(move[0]) + ',' + str(move[1]) + ',' + str(move[2]))
+    f.close()
+    
+    f = open('output.txt', 'r')
+    lines = f.readlines()
+    f.close()
+    result = lines[0].split(',')
+    return (int(result[0]), int(result[1]))
+    
 class GreedyAlgorithm(Algorithm):
   def __init__(self, currPlayer):
     Algorithm.__init__(self, currPlayer)
@@ -59,6 +81,7 @@ class RandomAlgorithm():
     x = random.randint(0, moves.GRID_LENGTH - 1)
     y = random.randint(0, moves.GRID_LENGTH - 1)
     moves.addMove(self.CURRENT_PLAYER, x, y)
+    return (x, y)
 
 class RandomAlgorithmImp():
   PLAYER_ONE = 1
@@ -76,7 +99,7 @@ class RandomAlgorithmImp():
     bestMove = ()
     bestScore = 0
     movesToPlay = []
-    while (len(movesToPlay) < 5):
+    while (len(movesToPlay) <= 1):
       x = random.randint(0, moves.GRID_LENGTH - 1)
       y = random.randint(0, moves.GRID_LENGTH - 1)
       if moves.isValidMove(x, y):
@@ -91,6 +114,7 @@ class RandomAlgorithmImp():
       moves.unplayMove()
 
     moves.addMove(self.CURRENT_PLAYER, bestMove[0], bestMove[1])
+    return (bestMove[0], bestMove[1])
 
 class RandomAlgorithmLookAhead():
   PLAYER_ONE = 1
